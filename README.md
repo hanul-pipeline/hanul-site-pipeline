@@ -14,6 +14,7 @@
 
 ## 🏠 구조
 #### 파이프라인 조직도
+<img width="991" alt="스크린샷 2023-07-14 오전 12 13 12" src="https://github.com/hanul-pipeline/hanul-site-pipeline/assets/130134750/278c324a-739c-42f2-a5dd-87fac207b278">
 
 #### 데이터베이스 조직도
 <img width="946" alt="스크린샷 2023-07-12 오전 11 25 11" src="https://github.com/hanul-pipeline/hanul-site-pipeline/assets/130134750/b5eadeec-e8e7-4371-b3c8-2b3887337e0f">
