@@ -10,22 +10,25 @@ app = Flask(__name__)
 @app.route('/data-endpoint', methods=['POST'])
 def receive_data():
     # MAKE DATA
-    date = datetime.now()
+    # date = datetime.now().strftime("%Y-%m-%d")
+    # time = datetime.now().strftime("%H:%M:%S")
     data_received = request.get_json()
     sensor_id = data_received["sensor_id"]
-    data = {"date" : date}
-    for key, value in data_received.items():
-        data[key] = value
+    date = data_received["date"]
+    time = data_received["time"]
+    # data = {"date" : date}
+    # for key, value in data_received.items():
+    #     data[key] = value
 
     # CREATE JSON FILE
     DATA_DIR = f"../../datas/JSON/{sensor_id}"
     LOG_DIR = f"../../datas/DONE/{sensor_id}"
 
-    with open(f"{DATA_DIR}/{sensor_id}-{date}.json", "w") as file:
-        json.dump(data, file, indent=4)
-        file.write(",")
+    with open(f"{DATA_DIR}/{sensor_id}&{date}&{time}.json", "w") as file:
+        # json.dump(data, file, indent=4)
+        json.dump(data_received, file, indent=4)
         # CREATE FLAG
-        with open(f"{LOG_DIR}/{sensor_id}-{date}-DONE", "w") as file:
+        with open(f"{LOG_DIR}/{sensor_id}&{date}&{time}&DONE", "w") as file:
             pass
 
     # END

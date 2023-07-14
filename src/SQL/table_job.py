@@ -1,12 +1,17 @@
 # MODULE IMPORT
-import sys, os
-current_dir = os.path.dirname(os.path.abspath(__file__))
-relative_path = os.path.join(current_dir, '../../lib/MySQL')
-sys.path.append(relative_path)
+import sys
+sys.path.append('../../lib/MySQL')
 import connector_lib as lib
 
+# LOGIC - DONE FLAG
+# DONE FLAG 에서 시간이 해당 시간인 데이터 추려서 개수 파악하기
+# 개수 비교하기
+# 비교 끝나면 JSON 들어가서 해당 시간인 데이터 추리기
+# 그 데이터들만 읽어서 서버에 올리기
+
 # PARAMETERS
-JSON_DIR = "../../datas/JSON/404"
+sensor_id = sys.argv[1]
+JSON_DIR = f"../../datas/JSON/{sensor_id}"
 TABLE_NAME = 'measurement'
 
 # UPDATE DATABASE

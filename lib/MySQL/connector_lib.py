@@ -25,8 +25,9 @@ def JSON_to_table(JSON_DIR, TABLE_NAME):
         data = json.load(file)
     sensor_id = data['sensor_id']
     date = data['date']
+    time = data['time']
     value = data['value']
-    query = f"INSERT INTO {TABLE_NAME} (sensor_id, date, value) \
-              VALUES ({sensor_id}, {date}, {value})"
+    query = f"INSERT INTO {TABLE_NAME} (sensor_id, date, time, value) \
+              VALUES ({sensor_id}, {date}, {time}, {value})"
     cursor.execute(query)
     conn.commit()
