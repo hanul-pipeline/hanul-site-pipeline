@@ -18,8 +18,9 @@ def receive_data():
         data[key] = value
 
     # CREATE JSON FILE
-    DATA_DIR = "../../datas/JSON/404"
-    LOG_DIR = "../../datas/DONE/404"
+    DATA_DIR = f"../../datas/JSON/{sensor_id}"
+    LOG_DIR = f"../../datas/DONE/{sensor_id}"
+
     with open(f"{DATA_DIR}/{sensor_id}-{date}.json", "w") as file:
         json.dump(data, file, indent=4)
         file.write(",")
