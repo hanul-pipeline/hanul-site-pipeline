@@ -42,6 +42,8 @@ def JSON_to_table_ver2(JSON_DIR, TABLE_NAME):
     now = datetime.now().replace(minute=0, second=0, microsecond=0) # 현재 시간을 추출해서 정각으로 변환
     one_hour_ago = now - timedelta(hours=1)
 
+    DB_LOG_DIR = f"../../datas/DONE/...." # 센서ID 기준? 매 시간 기준?
+    
     # 디렉토리 안의 모든 json 파일을 읽음
     for filename in glob.glob(JSON_DIR):
         # 파일명에서 시간 정보를 추출
@@ -57,4 +59,9 @@ def JSON_to_table_ver2(JSON_DIR, TABLE_NAME):
                 # MySQL 쿼리 생성
                 sql = f"INSERT INTO {TABLE_NAME}(sensor_id, date, time, value) VALUES (%s, %s, %s, %s)"
                 cursor.execute(sql, (data['sensor_id'], data['date'], data['time'], data['value']))
+                
+                # DB DONE FLAG 생성
+                with open(f"{DB_LOG_DIR}/{data['sensor_id']}&{one_hour_ago}&DONE", "w") as file:
+                    pass
+        
     conn.commit()
