@@ -65,3 +65,5 @@ def JSON_to_table_ver2(JSON_DIR, TABLE_NAME):
                     pass
         
     conn.commit()
+    
+    # 
