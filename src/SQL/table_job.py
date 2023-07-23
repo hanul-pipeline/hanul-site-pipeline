@@ -16,3 +16,6 @@ TABLE_NAME = 'measurement'
 
 # UPDATE DATABASE
 lib.JSON_to_table(JSON_DIR, TABLE_NAME)
+
+# UPDATE DATABASE VER.2
+lib.JSON_to_table_ver2(JSON_DIR, TABLE_NAME)

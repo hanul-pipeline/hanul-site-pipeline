@@ -1,3 +1,9 @@
+# CHANGE WORK DIR
+import os
+os.chdir('/Users/kimdohoon/git/hanul/hanul-site-pipeline')
+# os.chdir("컨테이너 디렉토리")
+now_dir = os.getcwd()
+
 import mysql.connector, json, csv
 import glob
 from datetime import datetime, timedelta
@@ -42,7 +48,7 @@ def JSON_to_table_ver2(JSON_DIR, TABLE_NAME):
     now = datetime.now().replace(minute=0, second=0, microsecond=0) # 현재 시간을 추출해서 정각으로 변환
     one_hour_ago = now - timedelta(hours=1)
 
-    DB_LOG_DIR = f"../../datas/DONE/...." # 센서ID 기준? 매 시간 기준?
+    DB_LOG_DIR = f"{now_dir}/datas/DONE/{one_hour_ago}" # 센서ID 기준? 매 시간 기준? 매 시간이라면 now? one_hour_ago?
     
     # 디렉토리 안의 모든 json 파일을 읽음
     for filename in glob.glob(JSON_DIR):
