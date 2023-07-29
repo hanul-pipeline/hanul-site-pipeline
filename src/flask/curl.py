@@ -1,13 +1,16 @@
-# CHANGE WORK DIR
-import os
-os.chdir('/Users/kimdohoon/git/hanul/hanul-site-pipeline')
-# os.chdir("컨테이너 디렉토리")
-now_dir = os.getcwd()
-
-# MODULE IMPORT
-from datetime import datetime
+ # MODULE IMPORT
 from flask import Flask, request
-import json
+
+# LIBRARY IMPORT
+import os, sys
+os.chdir('/Users/kimdohoon/git/hanul/hanul-site-pipeline')
+lib_dir = f"{os.getcwd()}/lib"
+sys.path.append(lib_dir)
+from MySQL.connector_lib import *
+from processing.rank import *
+
+#
+SQLite_DIR = '/Users/kimdohoon/git/hanul/hanul-site-pipeline/datas/SQLite/cite'
 
 # CREATE APP
 app = Flask(__name__)
@@ -17,22 +20,29 @@ app = Flask(__name__)
 def receive_data():
     # MAKE DATA
     data_received = request.get_json()
-    print(data_received)
     sensor_id = data_received["sensor_id"]
     date = data_received["date"]
     time = data_received["time"]
+    measurement = data_received["measurement"]
+    rank = determine_rank(sensor_id, measurement)
 
-    # CREATE JSON FILE
-    DATA_DIR = f"{now_dir}/datas/JSON/{sensor_id}"
-    LOG_DIR = f"{now_dir}/datas/DONE/{sensor_id}"
+    # RANK INFORMATION UPDATE
+    data_received["rank"] = rank
+    QUERY = f"""
+        INSERT INTO sensor_data (sensor_id, date, time, measurement, rank)
+        VALUES ({sensor_id}, '{date}', '{time}', {measurement}, '{rank}')
+        """
 
-    with open(f"{DATA_DIR}/{sensor_id}&{date}&{time}.json", "w") as file:
-        json.dump(data_received, file, indent=4)
-        with open(f"{LOG_DIR}/{sensor_id}&{date}&{time}&DONE", "w") as file:
+    # INSERT DATAS INTO SQLITE + CREATE FLAG
+    SQLite_UPDATE(SQLite_DIR, QUERY)
+    LOG_DIR = f"/Users/kimdohoon/git/hanul/hanul-site-pipeline/datas/DONE/{sensor_id}"
+
+    # CREATE FLAG
+    with open(f"{LOG_DIR}/{sensor_id}&{date}&{time}&DONE", "w") as file:
             pass
 
     # END
-    return("DATA RECEIVED")
+    return(f"DATA RECEIVED {time}\n")
 
 # RUN APP
 if __name__ == "__main__":
