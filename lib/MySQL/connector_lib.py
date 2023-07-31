@@ -14,6 +14,55 @@ def SQLite_UPDATE(PATH, QUERY):
     cursor.execute(QUERY)
     connection.commit()
 
+def transfer_data(sqlite_path, mysql_config, table_name):
+    # SQLite DB에 연결
+    conn = sqlite3.connect(sqlite_path)
+    cursor = conn.cursor()
+
+    # 현재 시간과 한 시간 전 시간을 계산
+    now = datetime.now().replace(minute=0, second=0, microsecond=0) # 현재 시간을 추출해서 정각으로 변환
+    one_hour_ago = now - timedelta(hours=1)
+    one_hour_ago_str = one_hour_ago.strftime('%Y-%m-%d %H:%M:%S')
+
+    # SQLite DB에서 지난 한 시간의 데이터를 가져옴
+    cursor.execute(f"SELECT * FROM {table_name} WHERE date || ' ' || time > ?", (one_hour_ago_str,))
+    rows = cursor.fetchall()
+
+    # MySQL DB에 연결
+    mysql_conn = mysql.connect(**mysql_config)
+    mysql_cursor = mysql_conn.cursor()
+
+    # MySQL DB에 데이터 삽입
+    for row in rows:
+        # 이 부분은 실제 필드에 맞게 수정해야 합니다.
+        mysql_cursor.execute(
+            f"INSERT INTO {table_name} (sensor_id, date, time, measurement, rank) VALUES (%s, %s, %s, %s, %s)",
+            row
+        )
+
+    # MySQL DB 연결 종료
+    mysql_conn.commit()
+    mysql_cursor.close()
+    mysql_conn.close()
+
+    # SQLite DB 연결 종료
+    cursor.close()
+    conn.close()
+
+# 사용 예
+sqlite_file = "/home/kjh/code/hanul-site-pipeline/datas/SQLite/cite"
+mysql_config = {
+    'host': 'localhost',
+    'user': 'username',
+    'password': 'password',
+    'db': 'dbname',
+    'charset': 'utf8mb4',
+}
+table_name = "sensor_data"
+transfer_data(sqlite_file, mysql_config, table_name)
+
+
+
 '''
 MySQL Modules
 '''
@@ -24,7 +73,6 @@ MySQL Modules
 #     csv_reader = csv.reader(file)
 #     for row in csv_reader:
 #         db_data = row
-
 # # CREATE CONNECTIONS & CURSORS
 # def MySQL_CONNECT():
 #     conn = mysql.connector.connect(
