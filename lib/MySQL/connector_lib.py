@@ -55,8 +55,7 @@ mysql_config = {
     'host': 'localhost',
     'user': 'username',
     'password': 'password',
-    'db': 'dbname',
-    'charset': 'utf8mb4',
+    'db': 'hanul_site',
 }
 table_name = "sensor_data"
 transfer_data(sqlite_file, mysql_config, table_name)
