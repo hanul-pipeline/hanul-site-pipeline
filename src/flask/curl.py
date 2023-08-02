@@ -3,14 +3,16 @@ from flask import Flask, request
 
 # LIBRARY IMPORT
 import os, sys
-os.chdir('/Users/kimdohoon/git/hanul/hanul-site-pipeline')
+# os.chdir('/Users/kimdohoon/git/hanul/hanul-site-pipeline')
+os.chdir('/home/kjh/code/hanul-site-pipeline')
 lib_dir = f"{os.getcwd()}/lib"
 sys.path.append(lib_dir)
 from MySQL.connector_lib import *
 from processing.rank import *
 
 #
-SQLite_DIR = '/Users/kimdohoon/git/hanul/hanul-site-pipeline/datas/SQLite/cite'
+# SQLite_DIR = '/Users/kimdohoon/git/hanul/hanul-site-pipeline/datas/SQLite/cite'
+SQLite_DIR = '/home/kjh/code/hanul-site-pipeline/datas/SQLite/cite'
 
 # CREATE APP
 app = Flask(__name__)
@@ -35,12 +37,13 @@ def receive_data():
 
     # INSERT DATAS INTO SQLITE + CREATE FLAG
     SQLite_UPDATE(SQLite_DIR, QUERY)
-    LOG_DIR = f"/Users/kimdohoon/git/hanul/hanul-site-pipeline/datas/DONE/{sensor_id}"
+    # LOG_DIR = f"/Users/kimdohoon/git/hanul/hanul-site-pipeline/datas/DONE/{sensor_id}"
+    LOG_DIR = f"/home/kjh/code/hanul-site-pipeline/datas/DONE/{sensor_id}"
 
     # CREATE FLAG
     with open(f"{LOG_DIR}/{sensor_id}&{date}&{time}&DONE", "w") as file:
             pass
-
+        
     # END
     return(f"DATA RECEIVED {time}\n")
 
