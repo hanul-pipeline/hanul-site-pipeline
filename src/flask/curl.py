@@ -9,7 +9,7 @@ sys.path.append(lib_dir)
 from MySQL.connector_lib import *
 from processing.rank import *
 
-#
+# 
 SQLite_DIR = '/flask_compose/datas/SQLite/cite'
 
 # CREATE APP
