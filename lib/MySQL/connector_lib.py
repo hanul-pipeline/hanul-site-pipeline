@@ -14,7 +14,7 @@ def SQLite_UPDATE(PATH, QUERY):
     cursor.execute(QUERY)
     connection.commit()
 
-def transfer_data(sqlite_path, mysql_config, table_name):
+def SQLite_to_MySQL(sqlite_path, mysql_config, table_name):
     # SQLite DB에 연결
     conn = sqlite3.connect(sqlite_path)
     cursor = conn.cursor()
@@ -49,17 +49,17 @@ def transfer_data(sqlite_path, mysql_config, table_name):
     cursor.close()
     conn.close()
 
-# 사용 예
-sqlite_file = "/home/kjh/code/hanul-site-pipeline/datas/SQLite/cite"
-mysql_config = {
-    'host': 'localhost',
-    'user': 'kjh',
-    'password': '1111',
-    'port':'3307',
-    'db': 'kjh'
-}
-table_name = "sensor_data"
-transfer_data(sqlite_file, mysql_config, table_name)
+# # 사용 예
+# sqlite_file = "/home/kjh/code/hanul-site-pipeline/datas/SQLite/cite"
+# mysql_config = {
+#     'host': 'localhost',
+#     'user': 'kjh',
+#     'password': '1111',
+#     'port':'3307',
+#     'db': 'kjh'
+# }
+# table_name = "sensor_data"
+# SQLite_to_MySQL(sqlite_file, mysql_config, table_name)
 
 
 

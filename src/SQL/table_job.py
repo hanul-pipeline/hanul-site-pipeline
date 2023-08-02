@@ -11,8 +11,17 @@ import connector_lib as lib
 
 # PARAMETERS
 sensor_id = sys.argv[1]
-JSON_DIR = f"../../datas/JSON/{sensor_id}"
+# JSON_DIR = f"../../datas/JSON/{sensor_id}"
 TABLE_NAME = 'measurement'
+SQLite_DIR = f"../../datas/JSON/{sensor_id}"
+mysql_config = {
+    'host': 'localhost',
+    'user': 'kjh',
+    'password': '1111',
+    'port':'3307',
+    'db': 'kjh'
+}
 
 # UPDATE DATABASE
-lib.JSON_to_table(JSON_DIR, TABLE_NAME)
+#lib.JSON_to_table(JSON_DIR, TABLE_NAME)
+lib.SQLite_to_MySQL(SQLite_DIR, mysql_config, TABLE_NAME)
