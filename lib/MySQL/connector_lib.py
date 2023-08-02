@@ -29,14 +29,14 @@ def transfer_data(sqlite_path, mysql_config, table_name):
     rows = cursor.fetchall()
 
     # MySQL DB에 연결
-    mysql_conn = mysql.connect(**mysql_config)
+    mysql_conn = mysql.connector.connect(**mysql_config)
     mysql_cursor = mysql_conn.cursor()
 
     # MySQL DB에 데이터 삽입
     for row in rows:
         # 이 부분은 실제 필드에 맞게 수정해야 합니다.
         mysql_cursor.execute(
-            f"INSERT INTO {table_name} (sensor_id, date, time, measurement, rank) VALUES (%s, %s, %s, %s, %s)",
+            f"INSERT INTO {table_name} (id, sensor_id, date, time, measurement, `rank`) VALUES (%s, %s, %s, %s, %s, %s)",
             row
         )
 
@@ -53,9 +53,10 @@ def transfer_data(sqlite_path, mysql_config, table_name):
 sqlite_file = "/home/kjh/code/hanul-site-pipeline/datas/SQLite/cite"
 mysql_config = {
     'host': 'localhost',
-    'user': 'username',
-    'password': 'password',
-    'db': 'hanul_site',
+    'user': 'kjh',
+    'password': '1111',
+    'port':'3307',
+    'db': 'kjh'
 }
 table_name = "sensor_data"
 transfer_data(sqlite_file, mysql_config, table_name)
