@@ -14,7 +14,7 @@ def SQLite_UPDATE(PATH, QUERY):
     cursor.execute(QUERY)
     connection.commit()
 
-def SQLite_to_MySQL(sqlite_path, mysql_config, table_name):
+def SQLite_to_MySQL(sqlite_path, mysql_config, table_sqlite, table_mysql):
     # SQLite DB에 연결
     conn = sqlite3.connect(sqlite_path)
     cursor = conn.cursor()
@@ -25,7 +25,7 @@ def SQLite_to_MySQL(sqlite_path, mysql_config, table_name):
     one_hour_ago_str = one_hour_ago.strftime('%Y-%m-%d %H:%M:%S')
 
     # SQLite DB에서 지난 한 시간의 데이터를 가져옴
-    cursor.execute(f"SELECT * FROM {table_name} WHERE date || ' ' || time > ?", (one_hour_ago_str,))
+    cursor.execute(f"SELECT * FROM {table_sqlite} WHERE date || ' ' || time > ?", (one_hour_ago_str,))
     rows = cursor.fetchall()
 
     # MySQL DB에 연결
@@ -34,10 +34,12 @@ def SQLite_to_MySQL(sqlite_path, mysql_config, table_name):
 
     # MySQL DB에 데이터 삽입
     for row in rows:
+        rest_of_row = row[1:]
+
         # 이 부분은 실제 필드에 맞게 수정해야 합니다.
         mysql_cursor.execute(
-            f"INSERT INTO {table_name} (id, sensor_id, date, time, measurement, `rank`) VALUES (%s, %s, %s, %s, %s, %s)",
-            row
+            f"INSERT INTO {table_mysql} (sensor_id, date, time, measurement, `rank`) VALUES (%s, %s, %s, %s, %s)",
+            rest_of_row
         )
 
     # MySQL DB 연결 종료
@@ -49,17 +51,21 @@ def SQLite_to_MySQL(sqlite_path, mysql_config, table_name):
     cursor.close()
     conn.close()
 
+
+
+
 # # 사용 예
-# sqlite_file = "/home/kjh/code/hanul-site-pipeline/datas/SQLite/cite"
-# mysql_config = {
-#     'host': 'localhost',
-#     'user': 'kjh',
-#     'password': '1111',
-#     'port':'3307',
-#     'db': 'kjh'
-# }
-# table_name = "sensor_data"
-# SQLite_to_MySQL(sqlite_file, mysql_config, table_name)
+sqlite_file = "/home/kjh/code/hanul-site-pipeline/datas/SQLite/cite"
+mysql_config = {
+    'host': '34.22.92.176',
+    'user': 'root',
+    'password': 'hanul0702',
+    'port':'3306',
+    'db': 'hanul_site'
+}
+table_sqlite = "sensor_data"
+table_mysql = 'measurement'
+SQLite_to_MySQL(sqlite_file, mysql_config, table_sqlite, table_mysql)
 
 
 
