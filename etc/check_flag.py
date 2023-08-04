@@ -34,3 +34,8 @@ def check_flag(LOG_DIR, check_time, interval):
 
 # result, file_count, valid_files, now, one_hour_ago = check_flag(LOG_DIR, check_time, interval)
 # print(result, file_count, valid_files, now, one_hour_ago)
+
+# check_flag 파라미터 샘플
+# LOG_DIR = f"/home/kjh/code/hanul-site-pipeline/datas/DONE/{sensor_id}"
+# check_time = 3600
+# interval = 1

@@ -20,6 +20,6 @@ def send_curl_every_second(sensor_id, sensor_value, interval):
 # 함수 실행
 if __name__ == "__main__":
     sensor_id = 404
-    sensor_value = 500 * random.random()
+    sensor_value = int(500 * random.random())
     interval = 1
     send_curl_every_second(sensor_id, sensor_value, interval)
