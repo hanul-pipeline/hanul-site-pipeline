@@ -25,3 +25,4 @@ mysql_config = {
 # UPDATE DATABASE
 #lib.JSON_to_table(JSON_DIR, TABLE_NAME)
 lib.SQLite_to_MySQL(SQLite_DIR, mysql_config, TABLE_NAME)
+

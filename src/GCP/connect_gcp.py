@@ -4,6 +4,7 @@ import os
 from google.cloud import storage
 from google.oauth2 import service_account
 
+'''
 ### GCP 연동 방법 1 ###
 # KEY_PATH : GCP 사용자 계정 크레덴셜 키 경로(JSON형식)
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="KEY_PATH"
@@ -13,6 +14,8 @@ storage_client = storage.Client()
 buckets = list(storage_client.list_buckets())
 
 print(buckets)
+'''
+
 
 ### GCP 연동 방법 2 ###
 # 서비스 계정 인증 정보가 담긴 JSON 파일 경로
@@ -23,11 +26,10 @@ credentials = service_account.Credentials.from_service_account_file(KEY_PATH)
 client = storage.Client(credentials = credentials, project = credentials.project_id)
 
 
-
 # GCP에 파일 올리기
-bucket_name = ''    # 서비스 계정 생성한 bucket 이름 입력
-source_file_name = ''    # GCP에 업로드할 파일 절대경로
-destination_blob_name = ''    # 업로드할 파일을 GCP에 저장할 때의 이름
+bucket_name = 'hanul-site'    # 서비스 계정 생성한 bucket 이름 입력
+source_file_name = '/home/kjh/code/hanul-site-pipeline/datas/DONE/1/1&2023-07-14&19:08:54&DONE'    # GCP에 업로드할 파일 절대경로
+destination_blob_name = 'TEST_DONE'    # 업로드할 파일을 GCP에 저장할 때의 이름
 
 
 storage_client = storage.Client()
@@ -36,6 +38,7 @@ blob = bucket.blob(destination_blob_name)
 
 blob.upload_from_filename(source_file_name)
 
+'''
 # GCP에서 파일 다운로드
 bucket_name = ''    # 서비스 계정 생성한 bucket 이름 입력
 source_blob_name = ''    # GCP에 저장되어 있는 파일 명
@@ -46,3 +49,4 @@ bucket = storage_client.bucket(bucket_name)
 blob = bucket.blob(source_blob_name)
 
 blob.download_to_filename(destination_file_name)
+'''
