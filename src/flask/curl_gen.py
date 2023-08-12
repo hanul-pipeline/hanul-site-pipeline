@@ -13,9 +13,9 @@ def send_curl_every_second(sensor_id, sensor_value, interval):
             'curl', '-X', 'POST', 
             '-H', 'Content-Type: application/json', 
             '-d',f'{{"sensor_id": {sensor_id}, "date":"{datetime.now().strftime("%Y-%m-%d")}", "time":"{datetime.now().strftime("%H:%M:%S")}", "measurement": {sensor_value}}}', 
-            'http://172.29.8.12:9000/data-endpoint'
+            'http://192.168.45.19:9000/data-endpoint'
         ])
-        time.sleep(interval)  # n초 동안 대기
+        time.sleep(interval)  # n초 동안 대기 
 
 # 함수 실행
 if __name__ == "__main__":
