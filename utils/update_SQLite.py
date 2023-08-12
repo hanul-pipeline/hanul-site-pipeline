@@ -20,7 +20,8 @@ def insert_measurements(data_received:dict, data_DIR:str):
         INSERT INTO measurement (sensor_id, date, time, measurement, rank)
         VALUES ({sensor_id}, '{date}', '{time}', {measurement}, '{rank}')
         """
-    SQLite_UPDATE(f"{data_DIR}/SQLite", QUERY)
+    # 추후 경로 수정 필요
+    SQLite_UPDATE(f"{data_DIR}/SQLite/measurement", QUERY)
 
     # Flag 파일 생성
     FLAG_DIR = f"{data_DIR}/DONE/{sensor_id}"
