@@ -13,5 +13,5 @@ async def receive_flags(
     return check_flag(FLAG_DIR, check_time, interval)
 
 @router.get("/test")
-async def test():
-    return {"message": "Test is successful!"}
+async def test(cnt : int):
+    return {f"message : {cnt} Test is successful!"}
