@@ -33,4 +33,5 @@ def create_table(PATH):
     conn.commit()
 
 if __name__ == "__main__":
-    create_table("/Users/kimdohoon/git/hanul/hanul-site-pipeline/datas/SQLite/measurement")
+    # <CONTAINER DIR>
+    create_table("/hanul/datas/SQLite/measurement")

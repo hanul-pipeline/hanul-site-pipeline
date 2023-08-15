@@ -1,4 +1,3 @@
-from datetime import datetime
 from libs.rank.rank import *
 from libs.DB.SQLite import *
 
@@ -20,12 +19,13 @@ def insert_measurements(data_received:dict, data_DIR:str):
         INSERT INTO measurement (sensor_id, date, time, measurement, rank)
         VALUES ({sensor_id}, '{date}', '{time}', {measurement}, '{rank}')
         """
-    # 추후 경로 수정 필요
+    
+    # SQLite 경로 입력
     SQLite_UPDATE(f"{data_DIR}/SQLite/measurement", QUERY)
 
     # Flag 파일 생성
+    # Flag 파일 경로 입력
     FLAG_DIR = f"{data_DIR}/DONE/{sensor_id}"
-    # FLAG_DIR = "/users/kimdohoon/Desktop/TEST"
     with open(f"{FLAG_DIR}/{sensor_id}&{date}&{time}&DONE", "w") as file:
         pass
     

@@ -6,6 +6,6 @@ from datetime import datetime
 router = APIRouter()
 @router.post('/sensors', response_class=PlainTextResponse)
 async def receive_data(data_received: dict):
+    # <CONTAINER DIR>
     data_DIR = "/hanul/datas/"
-    # SQLite_DIR = "/Users/kimdohoon/git/hooniegit/FastAPI-demo/datas/SQLite/sensors"
     return insert_measurements(data_received, data_DIR)
