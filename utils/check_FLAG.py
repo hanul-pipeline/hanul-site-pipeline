@@ -1,7 +1,11 @@
 import glob
 from datetime import datetime, timedelta
 
-def check_flag(FLAG_DIR:str, check_time:int, interval:int):
+def check_flag(data_received: dict, FLAG_DIR: str):
+
+    check_time = data_received['check_time']
+    interval = data_received['interval']
+    
     # 현재 시간과 한 시간 전 시간을 계산
     now = datetime.now().replace(minute=0, second=0, microsecond=0) # 현재 시간을 추출해서 정각으로 변환
     one_hour_ago = now - timedelta(hours=1)
@@ -14,7 +18,7 @@ def check_flag(FLAG_DIR:str, check_time:int, interval:int):
     
     # 디렉토리 안의 모든 json 파일을 읽음
     file_count = 0 # 실제 파일 수를 세는 변수
-    for filename in glob.glob(FLAG_DIR + '/*'):
+    for filename in glob.glob(f'{FLAG_DIR}/DONE/404/*'):
         # 파일명에서 시간 정보를 추출
         timestamp_str = filename.split('/')[-1].split('&')[1] + '&' + filename.split('/')[-1].split('&')[2]  # 'date&time' 형식
         timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d&%H:%M:%S')  # 날짜와 시간 형식에 따라서 수정해야 함
