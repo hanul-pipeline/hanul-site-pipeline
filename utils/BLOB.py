@@ -5,9 +5,10 @@ import glob
 from datetime import datetime, timedelta
 
 # 전 날 쌓인 SQLite 데이터를 DATALAKE로 보내기
-def SQLite_to_datalake(data_received: dict, SQLite_DIR: str):
-    bucket_name = data_received["bucket_name"]
-    GCS_DIR = data_received["GCS_DIR"]
+def SQLite_to_datalake(sensor_id: str):
+    bucket_name = "hanul-sensors"
+    GCS_DIR = '/hanul/datas'
+    SQLite_DIR = "/home/kjh/code/hanul-site-pipeline/datas"
     
     ### GCP 연동 방법 2 ###
     # 서비스 계정 인증 정보가 담긴 JSON 파일 경로
@@ -25,12 +26,13 @@ def SQLite_to_datalake(data_received: dict, SQLite_DIR: str):
     messages = []
     # 디렉토리 안의 모든 SQLite 파일을 읽음
     for filename in glob.glob(f"{SQLite_DIR}/SQLite/*"):
-        # 파일명에서 시간 정보를 추출
+        # 파일명에서 시간 정보를 추출 (파일명은 yyyymmdd_hh_sensorid 형식)
         timestamp_str = filename.split('/')[-1].split('_')[0] + '_' + filename.split('/')[-1].split('_')[1]  # 'yyyymmdd_HH' 형식
         timestamp = datetime.strptime(timestamp_str, '%Y%m%d_%H')  # 날짜와 시간 형식에 따라서 수정해야 함
+        file_sensor_id = filename.split('/')[-1].split('_')[2]
+        
         # 파일의 시간이 한 시간 전과 현재 사이에 있는 경우에만 처리
-        print(timestamp)
-        if one_hour_ago <= timestamp < now:
+        if file_sensor_id == sensor_id and one_hour_ago <= timestamp < now:
             destination_blob_name = os.path.join(GCS_DIR, os.path.basename(filename))
             blob = bucket.blob(destination_blob_name)
             try:
