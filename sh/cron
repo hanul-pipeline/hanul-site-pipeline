@@ -1,0 +1,1 @@
+55 * * * * python3 /hanul/src/DB/create_db.py
