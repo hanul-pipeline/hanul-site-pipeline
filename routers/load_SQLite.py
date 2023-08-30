@@ -4,7 +4,7 @@ from utils.update_SQLite import *
 from datetime import datetime
 
 router = APIRouter()
-@router.post('/sensors', response_class=PlainTextResponse)
+@router.post('/sensor', response_class=PlainTextResponse)
 async def receive_data(data_received: dict):
     # <CONTAINER DIR>
     data_DIR = "/hanul/datas/"

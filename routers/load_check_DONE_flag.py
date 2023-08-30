@@ -4,7 +4,7 @@ from utils.check_DONE_flag import *
 from datetime import datetime
 
 router = APIRouter()
-@router.post('/flags', response_class=PlainTextResponse)
+@router.post('/check-DONE/404', response_class=PlainTextResponse)
 async def receive_flags(
     FLAG_DIR: str = Body(...), 
     check_time: int = Body(...), 
@@ -12,6 +12,3 @@ async def receive_flags(
 ):
     return check_flag(FLAG_DIR, check_time, interval)
 
-@router.get("/test")
-async def test():
-    return {"message": "Test is successful!"}
