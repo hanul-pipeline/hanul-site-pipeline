@@ -21,7 +21,7 @@ def insert_measurements(data_received:dict, data_DIR:str):
         """
     
     # SQLite 경로 입력
-    SQLite_UPDATE(f"{data_DIR}/SQLite/measurement", QUERY)
+    SQLite_UPDATE(f"{data_DIR}/SQLite/{date.replace('-','')}_{time[:2]}_{sensor_id}", QUERY)
 
     # Flag 파일 생성
     # Flag 파일 경로 입력

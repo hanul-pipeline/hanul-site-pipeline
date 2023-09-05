@@ -34,4 +34,5 @@ def create_table(PATH):
 
 if __name__ == "__main__":
     # <CONTAINER DIR>
-    create_table("/hanul/datas/SQLite/measurement")
+    #create_table("/hanul/datas/SQLite/measurement")
+    create_table("/home/kjh/code/hanul-site-pipeline/datas/SQLite/20230902_17_404")

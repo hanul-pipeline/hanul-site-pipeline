@@ -1,10 +1,7 @@
 import glob
 from datetime import datetime, timedelta
 
-def check_flag(data_received: dict, FLAG_DIR: str):
-
-    check_time = data_received['check_time']
-    interval = data_received['interval']
+def check_flag(check_time: int, interval: int, FLAG_DIR: str):
     
     # 현재 시간과 한 시간 전 시간을 계산
     now = datetime.now().replace(minute=0, second=0, microsecond=0) # 현재 시간을 추출해서 정각으로 변환
@@ -26,18 +23,20 @@ def check_flag(data_received: dict, FLAG_DIR: str):
         # 파일의 시간이 한 시간 전과 현재 사이에 있는 경우에만 처리
         if one_hour_ago <= timestamp < now:
             file_count += 1
-    
-    return (f"Data Integrity Check : {file_count == valid_files}\n")
+    if file_count == valid_files :
+        return '0'
+    else:
+        return '1'
+
     # 테스트 설정        
     # return file_count == valid_files, file_count, valid_files, now, one_hour_ago
 
 # 테스트 설정
-# LOG_DIR = f"/home/kjh/code/hanul-site-pipeline/datas/DONE/1"
-# check_time = 3600
-# interval = 1
-
-# result, file_count, valid_files, now, one_hour_ago = check_flag(LOG_DIR, check_time, interval)
-# print(result, file_count, valid_files, now, one_hour_ago)
+#LOG_DIR = f"/home/kjh/code/hanul-site-pipeline/datas"
+#check_time = 13
+#interval = 1
+#result = check_flag(check_time, interval, LOG_DIR)
+#print(result)
 
 # check_flag 파라미터 샘플
 # LOG_DIR = f"/home/kjh/code/hanul-site-pipeline/datas/DONE/{sensor_id}"

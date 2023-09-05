@@ -1,7 +1,5 @@
-import subprocess, time, random
+import subprocess, time
 from datetime import datetime
-
-import random # TEST
 
 def send_curl_every_second(sensor_id, sensor_value, interval):
     while True:
@@ -13,7 +11,7 @@ def send_curl_every_second(sensor_id, sensor_value, interval):
             'curl', '-X', 'POST', 
             '-H', 'Content-Type: application/json', 
             '-d',f'{{"sensor_id": {sensor_id}, "date":"{datetime.now().strftime("%Y-%m-%d")}", "time":"{datetime.now().strftime("%H:%M:%S")}", "measurement": {sensor_value}}}', 
-            'http://192.168.45.19:9000/sensors'
+            'http://172.24.249.89:9000/sensors'
         ])
         time.sleep(interval)  # n초 동안 대기 
 
